@@ -1,0 +1,51 @@
+drop sequence memseq ;
+create sequence memseq 
+increment by 1
+start with 0
+minvalue 0
+maxvalue 10000
+nocache;
+
+drop table member;
+create table member(
+	no number primary key,
+	id varchar2(10) not null,
+	name varchar2(20) not null,
+	email varchar2(20) not null,
+	password varchar2(10) not null,
+	image varchar2(20) default 'basic.jpg',
+	intro varchar2(100) default '자기소개'
+	--fri_count number default 0 --친구수
+);
+
+insert into member values(memseq.nextval,'ming','김민창','ming@ming.com','qwer','인물사진.jpg','자기소개');
+
+
+
+drop sequence boardseq ;
+create sequence boardseq 
+increment by 1
+start with 0
+minvalue 0
+maxvalue 10000
+nocache;
+
+drop table board;
+create table board(
+	bno number primary key,
+	no number not null,
+	bimage varchar2(20),
+	contents varchar2(200),
+	time date not null
+);
+
+
+drop table friends;
+create table friends(
+	no1 number,
+	no2 number,
+	req varchar2(10) default 'ADD', -- 친구상태(ADD, FRIEND)
+	CONSTRAINT no PRIMARY KEY(no1, no2)
+);
+
+commit;
