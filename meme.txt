@@ -48,4 +48,20 @@ create table friends(
 	CONSTRAINT no PRIMARY KEY(no1, no2)
 );
 
+drop sequence reb_seq;
+create sequence reb_seq 
+increment by 1
+start with 0
+minvalue 0
+maxvalue 10000
+nocache;
+
+drop table reboard;
+create table reboard(
+	rno number primary key, -- 덧글번호 
+	bno number not null, -- 게시글 번호
+	no number not null, -- 글쓴이
+	contents varchar2(50) not null 
+);
+
 commit;

@@ -1,3 +1,5 @@
+<%@page import="ming.board.ReboardDAO"%>
+<%@page import="ming.board.ReboardBean"%>
 <%@page import="ming.member.MemberBean"%>
 <%@page import="ming.member.MemberDAO"%>
 <%@page import="ming.board.BoardBean"%>
@@ -38,6 +40,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../../js/jquery.js"></script>
 <script>
+	function reb_btn(_bno){
+		contents = $("#reboard_con"+_bno).val();
+		bno = $("#reboard_bno"+_bno).val();
+		location.href="reboardWrite.jsp?bno="+bno+"&contents="+contents;
+	}
 	function modal_view(bno, bimage, contents){
 		/* 
 			REPLACE를 REPLACEALL 처럼 사용하기
@@ -133,8 +140,33 @@
 						<p>
 							<a role="button" onclick="comentToggle(<%=board.getBno()%>)">덧글쓰기</a>
 						</p>
-						<div id="coment<%=board.getBno()%>">
-							
+						<div class="ming-write" id="coment<%=board.getBno()%>" style="display:none;">
+							<form class="form-horizontal">
+								<div class="input-group">
+									<input id="reboard_con<%=board.getBno() %>" type="text" class="form-control">
+									<input id="reboard_bno<%=board.getBno() %>" type="hidden" class="form-control" value="<%=board.getBno()%>">
+									<a onclick="reb_btn(<%=board.getBno() %>)" role="button" class="btn input-group-addon">글쓰기</a>
+								</div>
+							</form>
+								<div class="form-group">
+									<table class="table">
+<%
+									ReboardDAO rdao = ReboardDAO.getInstance();
+									ArrayList<ReboardBean> rblists = rdao.getReboardByBno(board.getBno());
+									if(rblists.size()!=0){
+										for(ReboardBean reboard : rblists){
+%>
+										<tr>
+											<td align="center" width=15%><%=reboard.getName() %></td>
+											<td width=65%><%=reboard.getContents() %></td>
+											<td align="center" width=20%>답글쓰기</td>
+										</tr>
+<%
+										}
+									}
+%>
+									</table>
+								</div>
 						</div>
 						<hr>
 <%						
@@ -173,16 +205,45 @@
 						<p>
 							<a role="button" onclick="comentToggle(<%=board.getBno()%>)">덧글쓰기</a>
 						</p>
-						<div id="coment<%=board.getBno()%>" style="display:none;">
+						<div class="ming-write" id="coment<%=board.getBno()%>" style="display:none;">
 							<form class="form-horizontal">
-								<div class="form-group">
-									<input type="text" class="form-control">
-									글쓰기
+								<div class="input-group">
+									<input id="reboard_con<%=board.getBno() %>" type="text" class="form-control">
+									<input id="reboard_bno<%=board.getBno() %>" type="hidden" class="form-control" value="<%=board.getBno()%>">
+									<a onclick="reb_btn(<%=board.getBno() %>)" role="button" class="btn input-group-addon">글쓰기</a>
 								</div>
 							</form>
+								<div class="form-group">
+									<table class="table">
+<%
+									ReboardDAO rdao = ReboardDAO.getInstance();
+									ArrayList<ReboardBean> rblists = rdao.getReboardByBno(board.getBno());
+									if(rblists.size()!=0){
+										for(ReboardBean reboard : rblists){
+%>
+										<tr>
+											<td align="center" width=15%><%=reboard.getName() %></td>
+											<td width=65%><%=reboard.getContents() %></td>
+											<td align="center" width=20%>
+<%
+												if(no==reboard.getNo()){
+%>
+												<a href="reboardDelete.jsp?rno=<%=reboard.getRno() %>" role="button">삭제</a>
+<%
+												}
+%>
+											</td>
+										</tr>
+<%
+										}
+									}
+%>
+									</table>
+								</div>
 						</div>
 						<hr>
 <%						
+									
 					}
 				}else{
 %>
