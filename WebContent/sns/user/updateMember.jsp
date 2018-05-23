@@ -22,6 +22,14 @@
 		location.href="updateMemberPro.jsp?flag=1&no=" +<%=no%> + "&old_image=" + $("input[name='old_image']").val();
 		alert(no + "," + flag + "," + member.getImage());
 	}
+	function goodbye(no){
+		var result = confirm("회원탈퇴 하시겠습니까?");
+		if(result){
+			location.href="deleteMember.jsp?no="+no;
+		}else{
+			history.back();
+		}
+	}
 </script>
 </head>
 <body>
@@ -56,6 +64,7 @@
 								<input class="btn btn-primary btn-ms" type="submit" value="수정하기">
 						</div>
 					</form>
+					<p align="right"><a role="button" onClick="goodbye(<%=no%>);">회원탈퇴</a></p>
 				</div>
 			</div>
 		</div>

@@ -46,6 +46,19 @@ public class MemberDAO {
 				rs.getString("intro")
 				);
 	}
+	// È¸¿ø Å»Åð
+	public int deleteMember(String no){
+		int result = -1;
+		String sql="delete from member where no="+no;
+		try {
+			PreparedStatement ps =conn.prepareStatement(sql);
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	// ÇÁ·ÎÇÊ ¼öÁ¤
 	public int updateMember(MultipartRequest mr, int flag, int no){
 		int result=-1;

@@ -21,7 +21,6 @@ create table member(
 insert into member values(memseq.nextval,'ming','김민창','ming@ming.com','qwer','인물사진.jpg','자기소개');
 
 
-
 drop sequence boardseq ;
 create sequence boardseq 
 increment by 1
@@ -33,7 +32,7 @@ nocache;
 drop table board;
 create table board(
 	bno number primary key,
-	no number not null,
+	no number references member(no) on delete cascade,
 	bimage varchar2(20),
 	contents varchar2(200),
 	time date not null
@@ -42,8 +41,8 @@ create table board(
 
 drop table friends;
 create table friends(
-	no1 number,
-	no2 number,
+	no1 number references member(no) on delete cascade,
+	no2 number references member(no) on delete cascade,
 	req varchar2(10) default 'ADD', -- 친구상태(ADD, FRIEND)
 	CONSTRAINT no PRIMARY KEY(no1, no2)
 );
@@ -59,8 +58,8 @@ nocache;
 drop table reboard;
 create table reboard(
 	rno number primary key, -- 덧글번호 
-	bno number not null, -- 게시글 번호
-	no number not null, -- 글쓴이
+	bno number references board(bno) on delete cascade, -- 게시글 번호
+	no number references member(no) on delete cascade, -- 글쓴이
 	contents varchar2(50) not null 
 );
 

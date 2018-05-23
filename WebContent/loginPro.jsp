@@ -17,11 +17,9 @@
    if(member != null){
       int no = member.getNo();
       String _id = member.getId();
-      if(_id.equals("admin")){
-         viewPage = contextPath + "/sns/admin/mainPage.jsp";
-      }else{
-         viewPage = contextPath + "/sns/user/mainPage.jsp";
-      }
+
+      viewPage = contextPath + "/sns/user/mainPage.jsp";
+     
       System.out.println(no + "," + _id);
       
       session.setAttribute("no", no);

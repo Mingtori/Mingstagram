@@ -36,6 +36,7 @@ public class BoardDAO {
 		}
 		return instance;
 	}
+	
 	// 자기와 친구 글 불러오기
 	public ArrayList<BoardBean> getBoardMeAndFriends(int no){
 		ArrayList<BoardBean> list = new ArrayList<>();
