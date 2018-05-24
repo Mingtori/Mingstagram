@@ -15,7 +15,6 @@ create table member(
 	password varchar2(10) not null,
 	image varchar2(20) default 'basic.jpg',
 	intro varchar2(100) default '자기소개'
-	--fri_count number default 0 --친구수
 );
 
 insert into member values(memseq.nextval,'ming','김민창','ming@ming.com','qwer','인물사진.jpg','자기소개');

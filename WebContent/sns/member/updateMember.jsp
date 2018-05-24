@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="mainPage.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/sns/user/mainPage.css" rel="stylesheet">
 <%
 	int no = (int)session.getAttribute("no");
 	MemberDAO mdao = MemberDAO.getInstance();
@@ -19,13 +19,13 @@
 %>
 <script>
 	function image_del(){
-		location.href="updateMemberPro.jsp?flag=1&no=" +<%=no%> + "&old_image=" + $("input[name='old_image']").val();
+		location.href="<%=request.getContextPath() %>/sns/member/updateMemberPro.jsp?flag=1&no=" +<%=no%> + "&old_image=" + $("input[name='old_image']").val();
 		alert(no + "," + flag + "," + member.getImage());
 	}
 	function goodbye(no){
 		var result = confirm("회원탈퇴 하시겠습니까?");
 		if(result){
-			location.href="deleteMember.jsp?no="+no;
+			location.href="<%=request.getContextPath() %>/sns/member/deleteMember.jsp?no="+no;
 		}else{
 			history.back();
 		}
@@ -33,7 +33,7 @@
 </script>
 </head>
 <body>
-<%@ include file="top.jsp" %>
+<%@ include file="../user/top.jsp" %>
 	<div class="container">
 		<div class="blog-header">
 			<h2>정보 수정</h2>
@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="col-sm-8 blog-main">
 				<div class="blog-post">
-					<form class="form-signin" action="updateMemberPro.jsp" method="post" enctype="multipart/form-data">
+					<form class="form-signin" action="<%=request.getContextPath() %>/sns/member/updateMemberPro.jsp" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="old_image" value="<%=member.getImage()%>">
 						<input type="hidden" name="no" value="<%=no%>">
 					    <label for="id">아이디</label>
@@ -69,6 +69,6 @@
 			</div>
 		</div>
 	</div>
-<%@ include file="bottom.jsp" %>
+<%@ include file="../user/bottom.jsp" %>
 </body>
 </html>

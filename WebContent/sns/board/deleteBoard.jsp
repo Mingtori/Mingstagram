@@ -19,6 +19,6 @@
 				}
 			}
 		}
-		response.sendRedirect("mainPage.jsp");
+		response.sendRedirect(request.getContextPath()+"/sns/user/mainPage.jsp");
 	}
 %>

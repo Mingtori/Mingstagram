@@ -6,6 +6,6 @@
 	ReboardDAO rdao = ReboardDAO.getInstance();
 	int result = rdao.reboardDelete(rno);
 	if(result>0){
-		response.sendRedirect("mainPage.jsp");
+		response.sendRedirect(request.getContextPath()+"/sns/user/mainPage.jsp");
 	}
 %>

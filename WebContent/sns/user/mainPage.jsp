@@ -15,8 +15,12 @@
 	MemberBean member=null;
 	ArrayList<BoardBean> lists=null;
 	String imagePath = request.getContextPath() + "/images/";
-
+	
 	int no = (int)session.getAttribute("no");
+	if(no==0){
+		response.sendRedirect(request.getContextPath()+"/main.jsp");
+	}
+	
 	String fno = null;
 	fno = request.getParameter("fno");	// 사용자가 다른사람의 아이디로 들어왔을때
 	int _fno = 0;
@@ -39,55 +43,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../../js/jquery.js"></script>
-<script>
-	function reb_btn(_bno){
-		bno = $("#reboard_bno"+_bno).val();
-		contents = $("#reboard_con"+_bno).val();
-		location.href="reboardWrite.jsp?bno="+bno+"&contents="+contents;
-		/* $.ajax({
-			url:"reboardWrite.jsp",
-			dataType:"html",
-			data: ({
-				bno : $("#reboard_bno"+_bno).val(),
-				contents : $("#reboard_con"+_bno).val()
-			}),
-			success:function(data){
-				$("#tb"+_bno).prepend(data);
-			}
-		}) */
-	}
-	function modal_view(bno, bimage, contents){
-		/* 
-			REPLACE를 REPLACEALL 처럼 사용하기
-			- g : 발생할 모든 pattern에 대한 전역 검색
-			- i : 대/소문자 구분 안함
-			- m: 여러 줄 검색 (참고) 
-		*/
-		str = contents.replace(/<br>/gi,"\r\n");
-		$("#bno").val(bno);
-		$("#contents").val(str);
-		$("#old_bimage").val(bimage);
-	}
-	
-	function image_del(){
-		location.href="updateBoard.jsp?flag=1&bno=" + $("#bno").val() +"&old_bimage=" + $("#old_bimage").val();
-	}
-	
-	function SaveWrite(){
-		if($("textarea[name='contents']").val()==""){
-			alert("내용을 입력해주세요");
-			$("textarea[name='contents']").focus();
-			return false;
-		}
-	}
-	
-	function comentToggle(comentid){
-		$("#coment"+comentid).toggle();
-	}
-</script>
-<!-- <link href="../../css/bootstrap.min.css" rel="stylesheet">
-<script src="../../js/bootstrap.min.js"></script> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="mainPage.js"></script>
 <link href="mainPage.css" rel="stylesheet">
 </head>
 <body>
@@ -101,7 +57,7 @@
 <% 
 			if(no==_fno || _fno==0){
 %>
-			<form action="insertBoard.jsp" method="post" enctype="multipart/form-data" onsubmit="return SaveWrite()">
+			<form action="<%=request.getContextPath() %>/sns/board/insertBoard.jsp" method="post" enctype="multipart/form-data" onsubmit="return SaveWrite()">
 				<div class="ming-write form-group">
 					<textarea class="form-control" name="contents" style="resize:none; margin-bottom:10px"></textarea>
 					<div class="btn-group col-sm-offset-9">
@@ -132,7 +88,7 @@
 %>
 							<span class="btn-group btn-group-xs col-xs-2" role="group"">
 								<a href="#" data-toggle="modal" data-target="#myModal" role="button" class="btn btn-default" onclick="modal_view('<%=board.getBno()%>', '<%=board.getBimage()%>', '<%=board.getContents()%>');">수정</a>
-								<a href="deleteBoard.jsp?bno=<%=board.getBno() %>&bimage=<%=board.getBimage() %>" class="btn btn-default" role="button">삭제</a>
+								<a href="<%=request.getContextPath() %>/board/deleteBoard.jsp?bno=<%=board.getBno() %>&bimage=<%=board.getBimage() %>" class="btn btn-default" role="button">삭제</a>
 							</span>
 <% 
 							}
@@ -161,29 +117,7 @@
 							</form>
 								<div class="form-group">
 									<table class="table" id="tb<%=board.getBno()%>">
-<%
-									ReboardDAO rdao = ReboardDAO.getInstance();
-									ArrayList<ReboardBean> rblists = rdao.getReboardByBno(board.getBno());
-									if(rblists.size()!=0){
-										for(ReboardBean reboard : rblists){
-%>
-										<tr>
-											<td align="center" width=15%><font size="2"><%=reboard.getName() %></font></td>
-											<td width=65%><font size="2"><%=reboard.getContents() %></font></td>
-											<td align="center" width=20%>
-<%
-												if(no==reboard.getNo()){
-%>
-												<a href="reboardDelete.jsp?rno=<%=reboard.getRno() %>" role="button"><font size="2">삭제</font></a>
-<%
-												}
-%>
-											</td>
-										</tr>
-<%
-										}
-									}
-%>
+									<!-- 덧글이 들어갈거야 -->
 									</table>
 								</div>
 						</div>
@@ -205,7 +139,7 @@
 %>
 							<span class="btn-group btn-group-xs col-xs-2" role="group"">
 								<a href="#" data-toggle="modal" data-target="#myModal" role="button" class="btn btn-default" onclick="modal_view('<%=board.getBno()%>', '<%=board.getBimage()%>', '<%=board.getContents()%>');">수정</a>
-								<a href="deleteBoard.jsp?bno=<%=board.getBno() %>&bimage=<%=board.getBimage() %>" class="btn btn-default" role="button">삭제</a>
+								<a href="<%=request.getContextPath() %>/sns/board/deleteBoard.jsp?bno=<%=board.getBno() %>&bimage=<%=board.getBimage() %>" class="btn btn-default" role="button">삭제</a>
 							</span>
 <% 
 							}
@@ -234,29 +168,7 @@
 							</form>
 								<div class="form-group">
 									<table class="table" id="tb<%=board.getBno()%>">
-<%
-									ReboardDAO rdao = ReboardDAO.getInstance();
-									ArrayList<ReboardBean> rblists = rdao.getReboardByBno(board.getBno());
-									if(rblists.size()!=0){
-										for(ReboardBean reboard : rblists){
-%>
-										<tr>
-											<td align="center" width=15%><font size="2"><%=reboard.getName() %></font></td>
-											<td width=65%><font size="2"><%=reboard.getContents() %></font></td>
-											<td align="center" width=20%>
-<%
-												if(no==reboard.getNo()){
-%>
-												<a href="reboardDelete.jsp?rno=<%=reboard.getRno() %>" role="button"><font size="2">삭제</font></a>
-<%
-												}
-%>
-											</td>
-										</tr>
-<%
-										}
-									}
-%>
+									<!-- 덧글 -->
 									</table>
 								</div>
 						</div>

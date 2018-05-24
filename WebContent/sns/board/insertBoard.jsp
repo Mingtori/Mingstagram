@@ -27,5 +27,5 @@
 	}
 %>
 <script>
-	location.href="mainPage.jsp";
+	location.href="<%=request.getContextPath()%>/sns/user/mainPage.jsp";
 </script>

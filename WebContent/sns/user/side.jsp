@@ -24,7 +24,7 @@
 <%
 			if(fno==null || no==Integer.parseInt(fno)){
 %>
-  			<a href="updateMember.jsp" role="button" class="glyphicon glyphicon-pencil" style="float:right;"></a>
+  			<a href="<%=request.getContextPath()%>/sns/member/updateMember.jsp" role="button" class="glyphicon glyphicon-pencil" style="float:right;"></a>
 <%
 			}
 %>

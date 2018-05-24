@@ -10,6 +10,6 @@
 	FriendsDAO fdao = FriendsDAO.getInstance();
 	int result = fdao.deleteFriend(no1, no2);
 	if(result>0){
-		response.sendRedirect("searchMember.jsp?search=" + search);
+		response.sendRedirect(request.getContextPath()+"/sns/user/searchMember.jsp?search=" + search);
 	}
 %>

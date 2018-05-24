@@ -11,6 +11,6 @@
 	ReboardDAO rdao = ReboardDAO.getInstance();
 	int result = rdao.insertReboard(bno, no, contents);
 	if(result>0){
-		response.sendRedirect("mainPage.jsp");
+		response.sendRedirect(request.getContextPath()+"/sns/user/mainPage.jsp");
 	}
 %>

@@ -9,7 +9,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">글 수정</h4>
 				</div>
-			<form action="updateBoard.jsp" method="post" enctype="multipart/form-data" name="f">
+			<form action="<%=request.getContextPath() %>/sns/board/updateBoard.jsp" method="post" enctype="multipart/form-data" name="f">
 				<div class="modal-body">
 					<input type="hidden" name="bno" id="bno">
 					<input type="hidden" name="old_bimage" id="old_bimage">

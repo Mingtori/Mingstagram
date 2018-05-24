@@ -17,7 +17,7 @@
 <script>
 	function addFriend(n1, n2){
 		$.ajax({
-			url : "insertFriend.jsp",
+			url : "<%=request.getContextPath()%>/sns/friends/insertFriend.jsp",
 			data : ({
 				no1 : n1,
 				no2 : n2
@@ -73,8 +73,8 @@
 					break;
 				}else if(friend.getNo1()==member.getNo() && friend.getNo2()==no && friend.getReq().equals("ADD")){
 %>
-						<a href="okFriend.jsp?no1=<%=member.getNo() %>&no2=<%=no %>&search=<%=search %>" role="button" id="btn_ok" role="button" class="btn btn-primary">수락</a>
-						<a href="cancelFriend.jsp?no1=<%=member.getNo() %>&no2=<%=no %>&search=<%=search %>" id="btn_cancel" role="button" class="btn btn-warnning">취소</a>
+						<a href="<%=request.getContextPath()%>/sns/friends/okFriend.jsp?no1=<%=member.getNo() %>&no2=<%=no %>&search=<%=search %>" role="button" id="btn_ok" role="button" class="btn btn-primary">수락</a>
+						<a href="<%=request.getContextPath()%>/sns/friends/cancelFriend.jsp?no1=<%=member.getNo() %>&no2=<%=no %>&search=<%=search %>" id="btn_cancel" role="button" class="btn btn-warnning">취소</a>
 					
 <%
 					flag=true;

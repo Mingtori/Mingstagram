@@ -33,6 +33,22 @@ public class ReboardDAO {
 		}
 		return instance;
 	}
+	// 덧글수정
+	public int updateReboard(String rno, String contents){
+		int result=-1;
+		String sql = "update reboard set contents=? where rno=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, contents);
+			ps.setString(2, rno);
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	// 덧글쓰기
 	public int insertReboard(String bno, int no, String contents){
@@ -55,7 +71,7 @@ public class ReboardDAO {
 	// 해당 게시글 덧글 가져오기
 	public ArrayList<ReboardBean> getReboardByBno(int bno){
 		ArrayList<ReboardBean> list = new ArrayList<ReboardBean>();
-		String sql = "select rno, bno, reboard.no, member.name, contents from reboard, member where reboard.no=member.no and bno=?";
+		String sql = "select rno, bno, reboard.no, member.name, contents from reboard, member where reboard.no=member.no and bno=? order by rno";
 		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
